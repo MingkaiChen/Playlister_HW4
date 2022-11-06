@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import AccountErrorModal from './AccountErrorModal';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
@@ -26,7 +27,6 @@ export default function LoginScreen() {
             formData.get('email'),
             formData.get('password')
         );
-
     };
 
     return (
@@ -102,12 +102,13 @@ export default function LoginScreen() {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/register/" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
                         </Grid>
                         <Copyright sx={{ mt: 5 }} />
+                        <AccountErrorModal></AccountErrorModal>
                     </Box>
                 </Box>
             </Grid>
