@@ -76,7 +76,7 @@ function GlobalStoreContextProvider(props) {
                 return setStore({
                     currentModal : CurrentModal.NONE,
                     idNamePairs: payload.idNamePairs,
-                    currentList: payload.playlist,
+                    currentList: null,
                     currentSongIndex: -1,
                     currentSong: null,
                     newListCounter: store.newListCounter,
@@ -321,10 +321,8 @@ function GlobalStoreContextProvider(props) {
     store.deleteList = function (id) {
         async function processDelete(id) {
             let response = await api.deletePlaylistById(id);
-            if (response.data.success) {
-                store.loadIdNamePairs();
-                history.push("/");
-            }
+            store.loadIdNamePairs();
+            history.push("/");
         }
         processDelete(id);
     }
