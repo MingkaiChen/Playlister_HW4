@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import SongCard from './SongCard.js'
 import MUIEditSongModal from './MUIEditSongModal'
@@ -16,6 +16,28 @@ function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
     
+    function handleKeyDown(event) {
+        if (event.ctrlKey) {
+            if (event.keyCode === 90) {
+                if (store.canUndo()) 
+                    store.undo();
+                event.preventDefault();
+            }
+            else if (event.keyCode === 89) {
+                if (store.canRedo())
+                    store.redo();
+                event.preventDefault();
+            }
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+    }, [])
+
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {
         modalJSX = <MUIEditSongModal />;
